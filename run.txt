@@ -1,0 +1,3 @@
+cd UI
+.env\Scripts\Activate.ps1
+flask run

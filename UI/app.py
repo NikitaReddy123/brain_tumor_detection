@@ -1,6 +1,5 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
-from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
 
 
@@ -8,7 +7,7 @@ app=Flask(__name__)
 
 
 
-UPLOAD_FOLDER = r"/app/UI/static/ml/"
+UPLOAD_FOLDER = r"C:/Users/marik/OneDrive/Desktop/mini-project/brain-tumor-miniproject/UI/static/ml/"
 @app.after_request
 def add_header(response):
     """
@@ -28,13 +27,14 @@ def upload_file():
     if request.method == 'POST':  
         file = request.files['file']
         if file and allowed_file(file.filename):
+            print(file,filename)
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)) 
             ext=file.filename.rsplit('.', 1)[1].lower()       
-            cmd="python3"+" "+r"/app/script.py"+" "+UPLOAD_FOLDER+file.filename
+            cmd="python3"+" "+r"C:/Users/marik/OneDrive/Desktop/mini-project/brain-tumor-miniproject/script.py"+" "+UPLOAD_FOLDER+file.filename
             
             os.system(cmd)
-            if os.path.isfile(r"/app/UI/static/ml/pred.jpg"):
+            if os.path.isfile(r"C:/Users/marik/OneDrive/Desktop/mini-project/brain-tumor-miniproject/UI/static/ml/pred.jpg"):
                 pred="pred.jpg"
 
                 return redirect(url_for("final",name="Brain Tumor Predicted",pred=pred))
